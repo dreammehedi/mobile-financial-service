@@ -1,7 +1,30 @@
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const Login = () => {
+  // handle login form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  // validation user email / number
+  const validateEmailOrNumber = (value) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const numberPattern = /^[0-9]{10,15}$/;
+    if (emailPattern.test(value) || numberPattern.test(value)) {
+      return true;
+    }
+    return "Enter a valid mobile number or email address";
+  };
+
+  // handle login fn
+  const handleLogin = (data) => {
+    console.log(data);
+  };
+
   return (
     <>
       {/* dynamic page title */}
@@ -17,29 +40,49 @@ const Login = () => {
               Login
             </h2>
             {/* {error && <p className="text-red-500 mb-4">{error}</p>} */}
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
               {/* mobile number/email field */}
               <div>
                 <label className="text-sm text-gray-700">
                   Mobile Number / Email
                 </label>
                 <input
+                  {...register("loginNumberOrEmail", {
+                    required: "Mobile Number / Email is required",
+                    validate: validateEmailOrNumber,
+                  })}
                   type="text"
-                  name="name"
                   placeholder="Enter Your Number / Email..."
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 my-transition placeholder:text-sm"
                 />
+
+                {errors.loginNumberOrEmail && (
+                  <span className="text-xs font-medium font-inter text-red-500">
+                    {errors.loginNumberOrEmail.message}
+                  </span>
+                )}
               </div>
 
               {/* PIN field */}
               <div>
                 <label className="text-sm text-gray-700">PIN</label>
                 <input
+                  {...register("pin", {
+                    required: "PIN is required",
+                    pattern: {
+                      value: /^[0-9]{5}$/,
+                      message: "PIN must be a 5-digit number!",
+                    },
+                  })}
                   type="password"
-                  name="pin"
                   placeholder="Enter Your PIN..."
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 my-transition placeholder:text-sm"
                 />
+                {errors.pin && (
+                  <span className="text-xs font-medium font-inter text-red-500">
+                    {errors.pin.message}
+                  </span>
+                )}
               </div>
 
               <button
