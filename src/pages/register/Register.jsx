@@ -1,8 +1,14 @@
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
     <>
+      {/* dynamic page title */}
+      <Helmet>
+        <title>FlexiWalled - Register</title>
+      </Helmet>
+
       <section className="py-10 md:py-12 lg:py-16 bg-gray-100 w-full min-h-screen flex justify-center items-center">
         <div className="flex items-center justify-center ">
           <div className="container bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-md">

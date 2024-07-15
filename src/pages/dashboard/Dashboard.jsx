@@ -1,24 +1,47 @@
+import { Helmet } from "react-helmet-async";
+import { MdMarkEmailUnread } from "react-icons/md";
+import { PiDeviceMobileFill } from "react-icons/pi";
+import { SiNamemc } from "react-icons/si";
+import { TbCoinTakaFilled } from "react-icons/tb";
 import { Link } from "react-router-dom";
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-      <div className="container mx-auto p-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <>
+      {/* dynamic page title */}
+      <Helmet>
+        <title>FlexiWalled - Dashboard</title>
+      </Helmet>
+
+      {/* dashboard main page */}
+      <section className="py-10 md:py-12 lg:py-16 bg-gray-100 w-full min-h-screen flex items-center">
+        <div className="container p-4 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {/* User Info */}
-          <div className="col-span-1 bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">User Information</h2>
-            <p>
-              <strong>Name:</strong> mehedi
-            </p>
-            <p>
-              <strong>Email:</strong> mehedi
-            </p>
-            <p>
-              <strong>Mobile:</strong> mehedi
-            </p>
-            <p>
-              <strong>Balance:</strong> mehedi Taka
-            </p>
+          <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg">
+            {/* title */}
+            <h2 className="text-xl md:text-2xl font-bold mb-4">
+              User Information
+            </h2>
+            {/* user desc */}
+            <div className="space-y-2">
+              <p className="flex justify-start items-center gap-2 flex-wrap break-words">
+                <SiNamemc className="text-xl"></SiNamemc> <strong>Name:</strong>{" "}
+                Mehedi Hassan Miraj
+              </p>
+              <p className="flex justify-start items-center gap-2 flex-wrap break-words">
+                <MdMarkEmailUnread className="text-xl"></MdMarkEmailUnread>
+                <strong>Email Address:</strong> dreammehedihassan@gmail.com
+              </p>
+              <p className="flex justify-start items-center gap-2 flex-wrap break-words">
+                <PiDeviceMobileFill className="text-xl"></PiDeviceMobileFill>{" "}
+                <strong>Mobile Number:</strong> 01820158158154
+              </p>
+              <p className="flex justify-start items-center gap-2 flex-wrap break-words">
+                <TbCoinTakaFilled className="text-xl"></TbCoinTakaFilled>{" "}
+                <strong>Account Balance:</strong> 39339
+              </p>
+            </div>
+
+            {/* logout button */}
             <button
               // onClick={logout}
               className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
@@ -28,20 +51,23 @@ const Dashboard = () => {
           </div>
 
           {/* Transaction History */}
-          <div className="col-span-1 md:col-span-2 bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Recent Transactions</h2>
+          <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-lg shadow-lg">
+            {/* title */}
+            <h2 className="text-xl md:text-2xl font-bold mb-4">
+              Recent Transactions
+            </h2>
             {/* Placeholder for transaction history */}
             <p>No recent transactions</p>
             <Link
-              to="/transactions"
+              to="/"
               className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
             >
               View Transactions
             </Link>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 };
 
