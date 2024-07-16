@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -28,8 +29,16 @@ const Register = () => {
     return "Enter a valid email address!";
   };
   // hanlde register fn
-  const handleRegister = (data) => {
+  const handleRegister = async (data) => {
     console.log(data);
+
+    // register a new account in the database
+    const response = await axios.post(
+      "http://localhost:5000/api/register",
+      data
+    );
+    const resData = await response.data;
+    console.log(resData);
   };
   return (
     <>
