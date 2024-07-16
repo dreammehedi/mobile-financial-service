@@ -5,17 +5,19 @@ import { PiDeviceMobileFill } from "react-icons/pi";
 import { RiAdminFill } from "react-icons/ri";
 import { SiNamemc } from "react-icons/si";
 import { TbCoinTakaFilled } from "react-icons/tb";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader";
 import AxiosSecure from "./../../axios/AxiosSecure";
 const Dashboard = () => {
   // navigate
   const navigate = useNavigate();
 
-  // get user token
-  const token = localStorage.getItem("token");
+  // get location
+  const { pathname } = useLocation();
 
   // get user
   const [user, setUser] = useState(null);
+  console.log(user);
 
   // fetch user
   useEffect(() => {
@@ -24,14 +26,16 @@ const Dashboard = () => {
         const response = await AxiosSecure.get("/users");
         const resData = await response.data;
         setUser(resData);
+        console.log(resData);
       } catch (err) {
         console.error(err);
+        navigate("/");
       }
     };
     return () => {
       fetchUser();
     };
-  }, [token]);
+  }, [pathname, navigate]);
 
   // handle logout fn
   const handleLogout = () => {
@@ -39,6 +43,15 @@ const Dashboard = () => {
     setUser(null);
     navigate("/login");
   };
+
+  // user not login then loading
+  if (!user)
+    return (
+      <>
+        <Loader></Loader>
+      </>
+    );
+
   return (
     <>
       {/* dynamic page title */}
