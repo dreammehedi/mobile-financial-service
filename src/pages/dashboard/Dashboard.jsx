@@ -12,7 +12,7 @@ const Dashboard = () => {
   // navigate
   const navigate = useNavigate();
 
-  // get location
+  // location
   const { pathname } = useLocation();
 
   // get user
@@ -24,19 +24,20 @@ const Dashboard = () => {
     const fetchUser = async () => {
       try {
         const response = await AxiosSecure.get("/users");
-        const resData = await response.data;
-        setUser(resData);
-        console.log(resData);
+        setUser(response.data);
+        console.log(response.data);
       } catch (err) {
         console.error(err);
-        navigate("/");
+        if (err.response && err.response.status === 401) {
+          navigate("/login");
+        } else {
+          navigate("/");
+        }
       }
     };
-    return () => {
-      fetchUser();
-    };
-  }, [pathname, navigate]);
 
+    fetchUser();
+  }, [pathname, navigate]);
   // handle logout fn
   const handleLogout = () => {
     localStorage.removeItem("token");
