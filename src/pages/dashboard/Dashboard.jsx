@@ -1,10 +1,39 @@
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { PiDeviceMobileFill } from "react-icons/pi";
 import { SiNamemc } from "react-icons/si";
 import { TbCoinTakaFilled } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AxiosSecure from "./../../axios/AxiosSecure";
 const Dashboard = () => {
+  // navigate
+  const navigate = useNavigate();
+
+  // get user
+  const [user, setUser] = useState(null);
+  console.log(user);
+
+  // fetch user
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await AxiosSecure.get("/users");
+        const resData = await response.data;
+        setUser(resData);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  // handle logout fn
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    navigate("/login");
+  };
   return (
     <>
       {/* dynamic page title */}
@@ -43,7 +72,7 @@ const Dashboard = () => {
 
             {/* logout button */}
             <button
-              // onClick={logout}
+              onClick={handleLogout}
               className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
             >
               Logout
