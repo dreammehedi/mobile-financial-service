@@ -1,8 +1,8 @@
-import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import AxiosPublic from "../../axios/AxiosPublic";
 
 const Register = () => {
   // navigate
@@ -40,10 +40,7 @@ const Register = () => {
   const handleRegister = async (data) => {
     try {
       // register a new account in the database
-      const response = await axios.post(
-        "http://localhost:5000/api/register",
-        data
-      );
+      const response = await AxiosPublic.post("/register", data);
       const resData = await response.data;
       if (resData?.success) {
         reset();

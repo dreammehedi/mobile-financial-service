@@ -1,8 +1,8 @@
-import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import AxiosPublic from "./../../axios/AxiosPublic";
 
 const Login = () => {
   // navigate
@@ -33,7 +33,7 @@ const Login = () => {
   const handleLogin = async (data) => {
     try {
       // login user in the database
-      const response = await axios.post("http://localhost:5000/api/login", {
+      const response = await AxiosPublic.post("/login", {
         identifier: data?.loginNumberOrEmail,
         pin: data?.pin,
       });
