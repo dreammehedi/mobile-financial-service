@@ -42,6 +42,7 @@ const Login = () => {
           icon: "success",
           timer: 1000,
         });
+        localStorage.setItem("token", resData?.token);
         navigate("/");
       }
     } catch (err) {
