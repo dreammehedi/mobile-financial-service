@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { PiDeviceMobileFill } from "react-icons/pi";
+import { RiAdminFill } from "react-icons/ri";
 import { SiNamemc } from "react-icons/si";
 import { TbCoinTakaFilled } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,9 +11,11 @@ const Dashboard = () => {
   // navigate
   const navigate = useNavigate();
 
+  // get user token
+  const token = localStorage.getItem("token");
+
   // get user
   const [user, setUser] = useState(null);
-  console.log(user);
 
   // fetch user
   useEffect(() => {
@@ -25,8 +28,10 @@ const Dashboard = () => {
         console.error(err);
       }
     };
-    fetchUser();
-  }, []);
+    return () => {
+      fetchUser();
+    };
+  }, [token]);
 
   // handle logout fn
   const handleLogout = () => {
@@ -52,21 +57,25 @@ const Dashboard = () => {
             </h2>
             {/* user desc */}
             <div className="space-y-2">
+              <p className="flex justify-start items-center gap-2 flex-wrap break-words capitalize">
+                <RiAdminFill className="text-xl"></RiAdminFill>{" "}
+                <strong>Your Are:</strong> {user?.role}
+              </p>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">
                 <SiNamemc className="text-xl"></SiNamemc> <strong>Name:</strong>{" "}
-                Mehedi Hassan Miraj
+                {user?.name}
               </p>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">
                 <MdMarkEmailUnread className="text-xl"></MdMarkEmailUnread>
-                <strong>Email Address:</strong> dreammehedihassan@gmail.com
+                <strong>Email Address:</strong> {user?.email}
               </p>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">
                 <PiDeviceMobileFill className="text-xl"></PiDeviceMobileFill>{" "}
-                <strong>Mobile Number:</strong> 01820158158154
+                <strong>Mobile Number:</strong> {user?.mobileNumber}
               </p>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">
                 <TbCoinTakaFilled className="text-xl"></TbCoinTakaFilled>{" "}
-                <strong>Account Balance:</strong> 39339
+                <strong>Account Balance:</strong> {user?.balance}
               </p>
             </div>
 
