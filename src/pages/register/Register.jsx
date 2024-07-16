@@ -1,12 +1,15 @@
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Register = () => {
   // navigate
   const navigate = useNavigate();
+
+  // get user token
+  const token = localStorage.getItem("token");
 
   // handle register form
   const {
@@ -63,6 +66,12 @@ const Register = () => {
       });
     }
   };
+
+  // check user already logged in then redirect to the main page
+  if (token) {
+    return <Navigate to={"/"}></Navigate>;
+  }
+
   return (
     <>
       {/* dynamic page title */}
