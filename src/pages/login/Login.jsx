@@ -48,6 +48,7 @@ const Login = () => {
         });
         localStorage.setItem("token", resData?.token);
         navigate("/");
+        window.location.reload();
       }
     } catch (err) {
       Swal.fire({

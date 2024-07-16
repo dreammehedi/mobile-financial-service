@@ -15,9 +15,12 @@ const Dashboard = () => {
   // location
   const { pathname } = useLocation();
 
+  // get token
+
+  const token = localStorage.getItem("token");
+
   // get user
   const [user, setUser] = useState(null);
-  console.log(user);
 
   // fetch user
   useEffect(() => {
@@ -36,8 +39,11 @@ const Dashboard = () => {
       }
     };
 
-    fetchUser();
-  }, [pathname, navigate]);
+    if (token) {
+      fetchUser();
+    }
+  }, [pathname, navigate, token]);
+
   // handle logout fn
   const handleLogout = () => {
     localStorage.removeItem("token");
