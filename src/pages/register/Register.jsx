@@ -1,7 +1,36 @@
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const Register = () => {
+  // handle register form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  // validation user number
+  const validateMobileNumber = (value) => {
+    const numberPattern = /^[0-9]{11,15}$/;
+    if (numberPattern.test(value)) {
+      return true;
+    }
+    return "Enter a valid mobile number!";
+  };
+
+  // validation user email
+  const validateEmail = (value) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (emailPattern.test(value)) {
+      return true;
+    }
+    return "Enter a valid email address!";
+  };
+  // hanlde register fn
+  const handleRegister = (data) => {
+    console.log(data);
+  };
   return (
     <>
       {/* dynamic page title */}
@@ -18,62 +47,102 @@ const Register = () => {
             </h2>
             {/* {error && <p className="text-red-500 mb-4">{error}</p>} */}
             {/* register form */}
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit(handleRegister)} className="space-y-4">
               {/* name field */}
               <div>
                 <label className="text-sm text-gray-700">Name</label>
                 <input
+                  {...register("name", {
+                    required: "Name is required!",
+                  })}
                   type="text"
-                  name="name"
                   placeholder="Enter Your Name..."
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 my-transition placeholder:text-sm"
                 />
+                {errors.name && (
+                  <span className="text-xs font-medium font-inter text-red-500">
+                    {errors.name.message}
+                  </span>
+                )}
               </div>
 
               {/* PIN field */}
               <div>
                 <label className="text-sm text-gray-700">PIN</label>
                 <input
+                  {...register("pin", {
+                    required: "PIN is required!",
+                    pattern: {
+                      value: /^[0-9]{5}$/,
+                      message: "PIN must be a 5-digit number!",
+                    },
+                  })}
                   type="password"
-                  name="pin"
                   placeholder="Enter Your PIN..."
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 my-transition placeholder:text-sm"
                 />
+                {errors.pin && (
+                  <span className="text-xs font-medium font-inter text-red-500">
+                    {errors.pin.message}
+                  </span>
+                )}
               </div>
 
               {/* mobile field */}
               <div>
                 <label className="text-sm text-gray-700">Mobile Number</label>
                 <input
+                  {...register("mobileNumber", {
+                    required: "Mobile Number is required!",
+                    validate: validateMobileNumber,
+                  })}
                   type="number"
-                  name="mobileNumber"
                   placeholder="Enter Mobile Number..."
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 my-transition placeholder:text-sm"
                 />
+                {errors.mobileNumber && (
+                  <span className="text-xs font-medium font-inter text-red-500">
+                    {errors.mobileNumber.message}
+                  </span>
+                )}
               </div>
 
               {/* email field */}
               <div>
                 <label className="text-sm text-gray-700">Email</label>
                 <input
+                  {...register("email", {
+                    required: "Email is required!",
+                    validate: validateEmail,
+                  })}
                   type="email"
-                  name="email"
                   placeholder="Enter Your Email Address..."
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 my-transition placeholder:text-sm"
                 />
+                {errors.email && (
+                  <span className="text-xs font-medium font-inter text-red-500">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
 
               {/* role field */}
               <div>
                 <label className="text-sm text-gray-700">Role</label>
                 <select
-                  name="role"
+                  {...register("role", { required: "Role is required!" })}
                   placeholder="Role..."
                   className="text-sm w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 my-transition placeholder:text-sm"
                 >
+                  <option value="">Select Role</option>
                   <option value="user">User</option>
                   <option value="agent">Agent</option>
                 </select>
+                {errors.role && (
+                  <span className="text-xs font-medium font-inter text-red-500">
+                    {errors.role.message}
+                  </span>
+                )}
               </div>
 
               {/* register button */}

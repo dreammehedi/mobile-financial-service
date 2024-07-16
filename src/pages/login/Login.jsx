@@ -13,11 +13,11 @@ const Login = () => {
   // validation user email / number
   const validateEmailOrNumber = (value) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    const numberPattern = /^[0-9]{10,15}$/;
+    const numberPattern = /^[0-9]{11,15}$/;
     if (emailPattern.test(value) || numberPattern.test(value)) {
       return true;
     }
-    return "Enter a valid mobile number or email address";
+    return "Enter a valid mobile number or email address!";
   };
 
   // handle login fn
@@ -48,7 +48,7 @@ const Login = () => {
                 </label>
                 <input
                   {...register("loginNumberOrEmail", {
-                    required: "Mobile Number / Email is required",
+                    required: "Mobile Number / Email is required!",
                     validate: validateEmailOrNumber,
                   })}
                   type="text"
