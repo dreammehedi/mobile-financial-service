@@ -2,6 +2,7 @@ import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
   // handle login form
@@ -24,16 +25,30 @@ const Login = () => {
 
   // handle login fn
   const handleLogin = async (data) => {
-    // login user in the database
-    const response = await axios.post("http://localhost:5000/api/login", {
-      identifier: data?.loginNumberOrEmail,
-      pin: data?.pin,
-    });
-    const resData = await response.data;
-    if (resData?.success) {
-      reset();
+    try {
+      // login user in the database
+      const response = await axios.post("http://localhost:5000/api/login", {
+        identifier: data?.loginNumberOrEmail,
+        pin: data?.pin,
+      });
+      const resData = await response.data;
+      if (resData?.success) {
+        reset();
+        Swal.fire({
+          title: "Login Successful",
+          text: "You have successfully logged in!",
+          icon: "success",
+          timer: 7000,
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Error",
+        text: err.response?.data?.message || "Something went wrong!",
+        icon: "error",
+        timer: 7000,
+      });
     }
-    console.log(resData);
   };
 
   return (

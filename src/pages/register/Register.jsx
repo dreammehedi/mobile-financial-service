@@ -1,9 +1,13 @@
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  // navigate
+  const navigate = useNavigate();
+
   // handle register form
   const {
     register,
@@ -31,18 +35,33 @@ const Register = () => {
   };
   // hanlde register fn
   const handleRegister = async (data) => {
-    console.log(data);
-
-    // register a new account in the database
-    const response = await axios.post(
-      "http://localhost:5000/api/register",
-      data
-    );
-    const resData = await response.data;
-    if (resData?.success) {
-      reset();
+    try {
+      // register a new account in the database
+      const response = await axios.post(
+        "http://localhost:5000/api/register",
+        data
+      );
+      const resData = await response.data;
+      if (resData?.success) {
+        reset();
+        Swal.fire({
+          title: "Registration Successful",
+          icon: "success",
+          confirmButtonText: "Please Login",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          }
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Error",
+        text: err.response?.data?.message || "Something went wrong!",
+        icon: "error",
+        timer: 7000,
+      });
     }
-    console.log(resData);
   };
   return (
     <>
