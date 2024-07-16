@@ -59,7 +59,7 @@ const Register = () => {
         title: "Error",
         text: err.response?.data?.message || "Something went wrong!",
         icon: "error",
-        timer: 7000,
+        timer: 700,
       });
     }
   };

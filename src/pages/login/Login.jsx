@@ -1,10 +1,12 @@
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Login = () => {
+  // navigate
+  const navigate = useNavigate();
   // handle login form
   const {
     register,
@@ -38,15 +40,16 @@ const Login = () => {
           title: "Login Successful",
           text: "You have successfully logged in!",
           icon: "success",
-          timer: 7000,
+          timer: 1000,
         });
+        navigate("/");
       }
     } catch (err) {
       Swal.fire({
         title: "Error",
         text: err.response?.data?.message || "Something went wrong!",
         icon: "error",
-        timer: 7000,
+        timer: 700,
       });
     }
   };
