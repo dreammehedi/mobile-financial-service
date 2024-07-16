@@ -8,6 +8,7 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -38,6 +39,9 @@ const Register = () => {
       data
     );
     const resData = await response.data;
+    if (resData?.success) {
+      reset();
+    }
     console.log(resData);
   };
   return (

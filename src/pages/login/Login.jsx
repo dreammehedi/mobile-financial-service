@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -7,6 +8,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -21,8 +23,17 @@ const Login = () => {
   };
 
   // handle login fn
-  const handleLogin = (data) => {
-    console.log(data);
+  const handleLogin = async (data) => {
+    // login user in the database
+    const response = await axios.post("http://localhost:5000/api/login", {
+      identifier: data?.loginNumberOrEmail,
+      pin: data?.pin,
+    });
+    const resData = await response.data;
+    if (resData?.success) {
+      reset();
+    }
+    console.log(resData);
   };
 
   return (
