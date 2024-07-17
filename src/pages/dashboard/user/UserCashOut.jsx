@@ -53,6 +53,7 @@ function UserCashOut() {
         });
       }
     } catch (err) {
+      console.log(err);
       Swal.fire({
         title: "Error",
         text: `Transaction failed: ${
