@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import AxiosSecure from "./../../../axios/AxiosSecure";
@@ -73,6 +74,11 @@ function UserSendMoney() {
   };
   return (
     <>
+      {/* dynamic page title */}
+      <Helmet>
+        <title>FlexiWalled - User Dashboard - Send Money</title>
+      </Helmet>
+
       {/* send money */}
       <section className="w-full md:max-w-xl md:mx-auto rounded-md border border-gray-200 p-4 md:p-6 bg-gray-100">
         <h2 className="text-2xl mb-4">Send Money</h2>

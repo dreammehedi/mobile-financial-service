@@ -74,6 +74,13 @@ function UserDashboard({ user, setUser }) {
 
             <ul className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2 md:p-4 w-[80%] flex flex-wrap gap-4 md:gap-6 ">
               <li>
+                <Link to="/">
+                  <button className="my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                    Dashboard
+                  </button>
+                </Link>
+              </li>
+              <li>
                 <Link to="/dashboard/send-money">
                   <button className="my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
                     Send Money
