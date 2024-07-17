@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { PiDeviceMobileFill } from "react-icons/pi";
@@ -12,16 +13,21 @@ import HandleLogout from "./HandleLogout";
 import Loader from "./Loader";
 
 function AdminDashboard({ user, setUser }) {
+  // user search state
+  const [userSearchValue, setUserSearchValue] = useState("");
+
   // get all users
   const {
     data: allUsers = [],
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ["allUsers"],
+    queryKey: ["allUsers", userSearchValue],
     queryFn: async () => {
       try {
-        const response = await AxiosSecure.get("/all-users");
+        const response = await AxiosSecure.get(
+          `/all-users/?userFind=${userSearchValue}`
+        );
         const resData = await response.data;
         return resData;
       } catch (err) {
@@ -79,6 +85,14 @@ function AdminDashboard({ user, setUser }) {
       });
     }
   };
+
+  // user search
+  const handleUserSearch = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const searchData = form.userIdentification.value;
+    setUserSearchValue(searchData);
+  };
   return (
     <>
       {/* dynamic page title */}
@@ -128,13 +142,31 @@ function AdminDashboard({ user, setUser }) {
           )}
           {/* users data get */}
           <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-lg shadow-lg">
-            {/* title */}
-            <h2 className="text-xl md:text-2xl font-bold mb-4 flex items-center gap-2">
-              All Users:{" "}
-              <span className="bg-blue-500 text-white p-4 text-base rounded-full size-5 flex justify-center items-center">
-                {allUsers?.length}
-              </span>
-            </h2>
+            <div className="pb-3 flex flex-col lg:flex-row justify-between items-center">
+              {/* title */}
+              <h2 className="text-xl md:text-2xl font-bold mb-4 flex items-center gap-2">
+                All Users:{" "}
+                <span className="bg-blue-500 text-white p-4 text-base rounded-full size-5 flex justify-center items-center">
+                  {allUsers?.length}
+                </span>
+              </h2>
+
+              {/* user search form */}
+              <form
+                onSubmit={handleUserSearch}
+                className="w-full lg:w-1/2 space-y-2"
+              >
+                <span className="font-medium font-inter text-sm ">
+                  Search Mobile Number / Email Address...
+                </span>
+                <input
+                  name="userIdentification"
+                  className="w-full px-4 py-2 outline-none rounded-md bg-white ring-1 ring-gray-100 placeholder:text-sm font-inter"
+                  type="text"
+                  placeholder="Mobile Number / Email Address..."
+                />
+              </form>
+            </div>
 
             {allUsers?.length > 0 ? (
               <div className="overflow-x-auto rounded-md">
