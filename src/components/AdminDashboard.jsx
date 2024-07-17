@@ -6,13 +6,18 @@ import { PiDeviceMobileFill } from "react-icons/pi";
 import { RiAdminFill } from "react-icons/ri";
 import { SiNamemc } from "react-icons/si";
 import { TbCurrencyTaka } from "react-icons/tb";
+import Swal from "sweetalert2";
 import AxiosSecure from "./../axios/AxiosSecure";
 import HandleLogout from "./HandleLogout";
 import Loader from "./Loader";
 
 function AdminDashboard({ user, setUser }) {
   // get all users
-  const { data: allUsers = [], isPending } = useQuery({
+  const {
+    data: allUsers = [],
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
       try {
@@ -25,6 +30,36 @@ function AdminDashboard({ user, setUser }) {
     },
   });
 
+  // hanlde active account
+  const handleActiveAccount = async (userEmail) => {
+    try {
+      const response = await AxiosSecure.patch(`/user-active/${userEmail}`);
+      const resData = await response.data;
+      if (resData?.modifiedCount > 0) {
+        Swal.fire({
+          title: "Account Status Changed",
+          text: "User's account status has been updated successfully!",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        refetch();
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Error",
+        text: err.response?.data?.message || "Something went wrong!",
+        icon: "error",
+        timer: 700,
+      });
+      console.log(err);
+    }
+  };
+
+  // hanlde block account
+  const handleBlockAccount = (userEmail) => {
+    console.log(userEmail);
+  };
   return (
     <>
       {/* dynamic page title */}
@@ -157,12 +192,22 @@ function AdminDashboard({ user, setUser }) {
                                 // Render either Block or Active button based on user status
                                 (user.status === "active" ? (
                                   // Active button
-                                  <button className="text-xs my-transition bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
+                                  <button
+                                    onClick={() => {
+                                      handleBlockAccount(user?.email);
+                                    }}
+                                    className="text-xs my-transition bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700"
+                                  >
                                     Block
                                   </button>
                                 ) : (
                                   // Block button
-                                  <button className="text-xs my-transition bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+                                  <button
+                                    onClick={() => {
+                                      handleActiveAccount(user?.email);
+                                    }}
+                                    className="text-xs my-transition bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700"
+                                  >
                                     Active
                                   </button>
                                 ))}
