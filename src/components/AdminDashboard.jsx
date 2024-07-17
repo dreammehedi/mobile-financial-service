@@ -146,15 +146,21 @@ function AdminDashboard({ user, setUser }) {
                         </td>
                         <td>
                           <div className="flex items-center gap-2">
-                            {/* active button */}
-                            <button className="text-xs my-transition bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
-                              Active
-                            </button>
-
-                            {/* block button */}
-                            <button className="text-xs my-transition bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
-                              Block
-                            </button>
+                            {/* Check if user is not an admin and has a status */}
+                            {user?.role !== "admin" &&
+                              user?.status &&
+                              // Render either Block or Active button based on user status
+                              (user.status === "active" ? (
+                                // Active button
+                                <button className="text-xs my-transition bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
+                                  Block
+                                </button>
+                              ) : (
+                                // Block button
+                                <button className="text-xs my-transition bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+                                  Active
+                                </button>
+                              ))}
                           </div>
                         </td>
                       </tr>
