@@ -37,12 +37,10 @@ function UserCashOut() {
       totalAmount: amount + chargeFee,
       PIN: data?.pin,
     };
-    console.log(recipientInfo);
 
     try {
       const response = await AxiosSecure.post("/user-cash-out", recipientInfo);
       const resData = await response.data;
-      console.log(resData);
       if (resData?.transactionId) {
         reset();
         Swal.fire({
@@ -53,7 +51,6 @@ function UserCashOut() {
         });
       }
     } catch (err) {
-      console.log(err);
       Swal.fire({
         title: "Error",
         text: `Transaction failed: ${

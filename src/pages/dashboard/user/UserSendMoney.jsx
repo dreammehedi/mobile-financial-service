@@ -42,7 +42,6 @@ function UserSendMoney() {
         recipientInfo
       );
       const resData = await response.data;
-      console.log(resData);
       if (resData?.transactionId) {
         reset();
         Swal.fire({
