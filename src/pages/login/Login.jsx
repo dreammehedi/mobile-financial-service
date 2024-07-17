@@ -38,7 +38,6 @@ const Login = () => {
         pin: data?.pin,
       });
       const resData = await response.data;
-      console.log(resData);
 
       // check before user login , user account is activated by admin
       if (resData?.status !== "active") {
