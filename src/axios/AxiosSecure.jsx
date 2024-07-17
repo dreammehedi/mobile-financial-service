@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const AxiosSecure = axios.create({
-  baseURL: "https://flexiwalled-server.vercel.app",
-  // baseURL: "http://localhost:5000",
+  // baseURL: "https://flexiwalled-server.vercel.app",
+  baseURL: "http://localhost:5000",
   withCredentials: true,
 });
 

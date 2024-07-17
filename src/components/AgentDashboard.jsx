@@ -8,7 +8,7 @@ import { TbCoinTakaFilled, TbCurrencyTaka } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import HandleLogout from "./HandleLogout";
 
-function AgentDashboard({ user, setUser }) {
+function AgentDashboard({ user }) {
   return (
     <>
       {/* dynamic page title */}
@@ -57,7 +57,7 @@ function AgentDashboard({ user, setUser }) {
             </div>
 
             {/* logout button */}
-            <HandleLogout setUser={setUser}></HandleLogout>
+            <HandleLogout></HandleLogout>
           </div>
 
           {/* Transaction History */}
@@ -83,6 +83,5 @@ function AgentDashboard({ user, setUser }) {
 
 AgentDashboard.propTypes = {
   user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
 };
 export default AgentDashboard;

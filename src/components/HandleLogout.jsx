@@ -1,14 +1,12 @@
-import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-function HandleLogout({ setUser }) {
+function HandleLogout() {
   // navigate
   const navigate = useNavigate();
 
   // handle logout fn
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setUser(null);
     navigate("/login");
   };
 
@@ -25,7 +23,4 @@ function HandleLogout({ setUser }) {
   );
 }
 
-HandleLogout.propTypes = {
-  setUser: PropTypes.func.isRequired,
-};
 export default HandleLogout;

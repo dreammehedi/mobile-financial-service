@@ -8,7 +8,7 @@ import { TbCoinTakaFilled, TbCurrencyTaka } from "react-icons/tb";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import HandleLogout from "./HandleLogout";
 
-function UserDashboard({ user, setUser }) {
+function UserDashboard({ user }) {
   // pathname
   const { pathname } = useLocation();
 
@@ -60,7 +60,7 @@ function UserDashboard({ user, setUser }) {
             </div>
 
             {/* logout button */}
-            <HandleLogout setUser={setUser}></HandleLogout>
+            <HandleLogout></HandleLogout>
           </div>
 
           {/* main ui image & send money, cash-out, cash-in, balance-inquery, transaction history */}
@@ -129,6 +129,5 @@ function UserDashboard({ user, setUser }) {
 
 UserDashboard.propTypes = {
   user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
 };
 export default UserDashboard;

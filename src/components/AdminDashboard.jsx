@@ -12,7 +12,7 @@ import AxiosSecure from "./../axios/AxiosSecure";
 import HandleLogout from "./HandleLogout";
 import Loader from "./Loader";
 
-function AdminDashboard({ user, setUser }) {
+function AdminDashboard({ user }) {
   // user search state
   const [userSearchValue, setUserSearchValue] = useState("");
 
@@ -131,7 +131,7 @@ function AdminDashboard({ user, setUser }) {
             </div>
 
             {/* logout button */}
-            <HandleLogout setUser={setUser}></HandleLogout>
+            <HandleLogout></HandleLogout>
           </div>
 
           {/* is pending user data */}
@@ -284,6 +284,5 @@ function AdminDashboard({ user, setUser }) {
 
 AdminDashboard.propTypes = {
   user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
 };
 export default AdminDashboard;

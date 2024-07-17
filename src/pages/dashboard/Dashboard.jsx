@@ -5,7 +5,7 @@ import UserDashboard from "../../components/UserDashboard";
 import useUsersData from "../../hooks/useUsersData";
 const Dashboard = () => {
   // user data
-  const { user, setUser } = useUsersData();
+  const { user } = useUsersData();
 
   // user not login then loading
   if (!user)
@@ -19,7 +19,7 @@ const Dashboard = () => {
   if (user?.role === "admin") {
     return (
       <>
-        <AdminDashboard user={user} setUser={setUser}></AdminDashboard>
+        <AdminDashboard user={user}></AdminDashboard>
       </>
     );
   }
@@ -28,7 +28,7 @@ const Dashboard = () => {
   if (user?.role === "agent") {
     return (
       <>
-        <AgentDashboard user={user} setUser={setUser}></AgentDashboard>
+        <AgentDashboard user={user}></AgentDashboard>
       </>
     );
   }
@@ -36,7 +36,7 @@ const Dashboard = () => {
   if (user?.role === "user") {
     return (
       <>
-        <UserDashboard user={user} setUser={setUser}></UserDashboard>
+        <UserDashboard user={user}></UserDashboard>
       </>
     );
   }
