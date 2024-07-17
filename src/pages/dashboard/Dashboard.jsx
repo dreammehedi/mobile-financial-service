@@ -3,7 +3,7 @@ import { MdMarkEmailUnread } from "react-icons/md";
 import { PiDeviceMobileFill } from "react-icons/pi";
 import { RiAdminFill } from "react-icons/ri";
 import { SiNamemc } from "react-icons/si";
-import { TbCoinTakaFilled } from "react-icons/tb";
+import { TbCoinTakaFilled, TbCurrencyTaka } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import AdminDashboard from "../../components/AdminDashboard";
 import HandleLogout from "../../components/HandleLogout";
@@ -44,7 +44,7 @@ const Dashboard = () => {
           {/* User Info */}
           <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg">
             {/* title */}
-            <h2 className="text-xl md:text-2xl font-bold mb-4">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-blue-500">
               User Information
             </h2>
             {/* user desc */}
@@ -67,7 +67,14 @@ const Dashboard = () => {
               </p>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">
                 <TbCoinTakaFilled className="text-xl"></TbCoinTakaFilled>{" "}
-                <strong>Account Balance:</strong> {user?.balance}
+                <strong>Account Balance:</strong>{" "}
+                <div className="flex items-center gap-1">
+                  <TbCurrencyTaka></TbCurrencyTaka> {user?.balance}
+                </div>
+              </p>
+              <p className="flex justify-start items-center gap-2 flex-wrap break-words">
+                <TbCoinTakaFilled className="text-xl"></TbCoinTakaFilled>{" "}
+                <strong>Account Status:</strong> {user?.status}
               </p>
             </div>
 
@@ -78,7 +85,7 @@ const Dashboard = () => {
           {/* Transaction History */}
           <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-lg shadow-lg">
             {/* title */}
-            <h2 className="text-xl md:text-2xl font-bold mb-4">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-blue-500">
               Recent Transactions
             </h2>
             {/* Placeholder for transaction history */}
