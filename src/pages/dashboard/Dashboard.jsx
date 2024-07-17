@@ -1,50 +1,17 @@
-import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { PiDeviceMobileFill } from "react-icons/pi";
 import { RiAdminFill } from "react-icons/ri";
 import { SiNamemc } from "react-icons/si";
 import { TbCoinTakaFilled } from "react-icons/tb";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AdminDashboard from "../../components/AdminDashboard";
 import HandleLogout from "../../components/HandleLogout";
 import Loader from "../../components/Loader";
-import AxiosSecure from "./../../axios/AxiosSecure";
+import useUsersData from "../../hooks/useUsersData";
 const Dashboard = () => {
-  // navigate
-  const navigate = useNavigate();
-
-  // location
-  const { pathname } = useLocation();
-
-  // get token
-
-  const token = localStorage.getItem("token");
-
-  // get user
-  const [user, setUser] = useState(null);
-
-  // fetch user
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await AxiosSecure.get("/users");
-        setUser(response.data);
-        console.log(response.data);
-      } catch (err) {
-        console.error(err);
-        if (err.response && err.response.status === 401) {
-          navigate("/login");
-        } else {
-          navigate("/");
-        }
-      }
-    };
-
-    if (token) {
-      fetchUser();
-    }
-  }, [pathname, navigate, token]);
+  // user data
+  const { user, setUser } = useUsersData();
 
   // user not login then loading
   if (!user)
@@ -58,7 +25,7 @@ const Dashboard = () => {
   if (user?.role === "admin") {
     return (
       <>
-        <AdminDashboard setUser={setUser}></AdminDashboard>
+        <AdminDashboard user={user} setUser={setUser}></AdminDashboard>
       </>
     );
   }

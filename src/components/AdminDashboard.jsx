@@ -4,11 +4,10 @@ import { MdMarkEmailUnread } from "react-icons/md";
 import { PiDeviceMobileFill } from "react-icons/pi";
 import { RiAdminFill } from "react-icons/ri";
 import { SiNamemc } from "react-icons/si";
-import { TbCoinTakaFilled } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import HandleLogout from "./HandleLogout";
 
-function AdminDashboard({ setUser }) {
+function AdminDashboard({ user, setUser }) {
   return (
     <>
       {/* dynamic page title */}
@@ -23,29 +22,25 @@ function AdminDashboard({ setUser }) {
           <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg">
             {/* title */}
             <h2 className="text-xl md:text-2xl font-bold mb-4">
-              User Information
+              Admin Information
             </h2>
             {/* user desc */}
             <div className="space-y-2">
               <p className="flex justify-start items-center gap-2 flex-wrap break-words capitalize">
                 <RiAdminFill className="text-xl"></RiAdminFill>{" "}
-                {/* <strong>Your Are:</strong> {user?.role} */}
+                <strong>You are:</strong> {user?.role}
               </p>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">
                 <SiNamemc className="text-xl"></SiNamemc> <strong>Name:</strong>{" "}
-                {/* {user?.name} */}f
+                {user?.name}
               </p>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">
                 <MdMarkEmailUnread className="text-xl"></MdMarkEmailUnread>
-                {/* <strong>Email Address:</strong> {user?.email} */}
+                <strong>Email Address:</strong> {user?.email}
               </p>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">
                 <PiDeviceMobileFill className="text-xl"></PiDeviceMobileFill>{" "}
-                {/* <strong>Mobile Number:</strong> {user?.mobileNumber} */}
-              </p>
-              <p className="flex justify-start items-center gap-2 flex-wrap break-words">
-                <TbCoinTakaFilled className="text-xl"></TbCoinTakaFilled>{" "}
-                {/* <strong>Account Balance:</strong> {user?.balance} */}
+                <strong>Mobile Number:</strong> {user?.mobileNumber}
               </p>
             </div>
 
@@ -75,6 +70,7 @@ function AdminDashboard({ setUser }) {
 }
 
 AdminDashboard.propTypes = {
+  user: PropTypes.object.isRequired,
   setUser: PropTypes.func.isRequired,
 };
 export default AdminDashboard;
