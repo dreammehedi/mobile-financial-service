@@ -191,7 +191,7 @@ function AdminDashboard({ user, setUser }) {
                         <tr
                           key={ind}
                           className={`${
-                            ind / 2 === 0 ? "bg-blue-200" : "bg-blue-100"
+                            ind % 2 === 0 ? "bg-blue-200" : "bg-blue-100"
                           } *:px-4 *:py-2 *:break-words `}
                         >
                           <td>
