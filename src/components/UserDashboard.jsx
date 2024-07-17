@@ -60,20 +60,51 @@ function UserDashboard({ user, setUser }) {
             <HandleLogout setUser={setUser}></HandleLogout>
           </div>
 
-          {/* Transaction History */}
-          <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-lg shadow-lg">
-            {/* title */}
-            <h2 className="text-xl md:text-2xl font-bold mb-4 text-blue-500">
-              Recent Transactions
-            </h2>
-            {/* Placeholder for transaction history */}
-            <p>No recent transactions</p>
-            <Link
-              to="/"
-              className="my-transition mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-            >
-              View Transactions
-            </Link>
+          <div className="lg:col-span-2 w-full h-fit flex flex-col justify-center bg-white p-4 md:p-6 rounded-lg shadow-lg relative">
+            {/* image */}
+            <img
+              className="w-full h-auto md:max-h-[400px] object-cover rounded-md opacity-50"
+              src="https://i.ibb.co/d4ZcFmm/0-Nbm5t-Vi-L-X3n-EELe.png"
+              alt=""
+            />
+            {/* main ui */}
+            <ul className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2 md:p-4 w-[80%] flex flex-wrap gap-4 md:gap-6 ">
+              <li>
+                <Link to="/dashboard/send-money">
+                  <button className="my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                    Send Money
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/cash-out">
+                  <button className="my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                    Cash Out
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/cash-in">
+                  <button className="my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                    Cash In
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/balance-inquiry">
+                  <button className="my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                    Balance Inquiry
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/transaction-history">
+                  <button className="my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                    Transaction History
+                  </button>
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </section>
