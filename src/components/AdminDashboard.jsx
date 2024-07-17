@@ -4,7 +4,7 @@ import { MdMarkEmailUnread } from "react-icons/md";
 import { PiDeviceMobileFill } from "react-icons/pi";
 import { RiAdminFill } from "react-icons/ri";
 import { SiNamemc } from "react-icons/si";
-import { Link } from "react-router-dom";
+import { TbCurrencyTaka } from "react-icons/tb";
 import HandleLogout from "./HandleLogout";
 
 function AdminDashboard({ user, setUser }) {
@@ -24,6 +24,7 @@ function AdminDashboard({ user, setUser }) {
             <h2 className="text-xl md:text-2xl font-bold mb-4">
               Admin Information
             </h2>
+
             {/* user desc */}
             <div className="space-y-2">
               <p className="flex justify-start items-center gap-2 flex-wrap break-words capitalize">
@@ -48,20 +49,82 @@ function AdminDashboard({ user, setUser }) {
             <HandleLogout setUser={setUser}></HandleLogout>
           </div>
 
-          {/* Transaction History */}
+          {/* users data get */}
           <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-lg shadow-lg">
             {/* title */}
             <h2 className="text-xl md:text-2xl font-bold mb-4">
-              Recent Transactions
+              All Users: <span className="text-blue-500">3</span>
             </h2>
-            {/* Placeholder for transaction history */}
-            <p>No recent transactions</p>
-            <Link
-              to="/"
-              className="my-transition mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-            >
-              View Transactions
-            </Link>
+
+            <div className="overflow-x-auto rounded-md">
+              <table className="min-w-full text-xs text-left">
+                {/* table head */}
+                <thead className="w-full bg-blue-500  text-white">
+                  <tr className="*:px-4 *:py-3 text-base">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                {/* table body */}
+                <tbody className="font-medium">
+                  <tr className="*:px-4 *:py-2 *:break-words bg-blue-200">
+                    <td>Mehedi Hassan</td>
+                    <td>dreammehedihassan@gmail.com</td>
+                    <td>01830143234</td>
+                    <td>
+                      <div className="flex items-center gap-1">
+                        <TbCurrencyTaka></TbCurrencyTaka>500
+                      </div>
+                    </td>
+                    <td className="text-green-500">Activate</td>
+                    <td>
+                      {/* active button */}
+                      <button className="text-xs my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                        Active
+                      </button>
+
+                      {/* block button */}
+                      <button className="text-xs my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                        Block
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr className="*:px-4 *:py-2 *:break-words bg-blue-100">
+                    <td>Mehedi Hassan</td>
+                    <td>dreammehedihassan@gmail.com</td>
+                    <td>01830143234</td>
+                    <td>
+                      <div className="flex items-center gap-1">
+                        <TbCurrencyTaka></TbCurrencyTaka>500
+                      </div>
+                    </td>
+                    <td className="text-green-500">Activate</td>
+                    <td>
+                      {/* active button */}
+                      <button className="text-xs my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                        Active
+                      </button>
+
+                      {/* block button */}
+                      <button className="text-xs my-transition mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                        Block
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* <p className="text-sm font-medium font-inter text-red-500">
+              {" "}
+              No Users Found!
+            </p> */}
           </div>
         </div>
       </section>
