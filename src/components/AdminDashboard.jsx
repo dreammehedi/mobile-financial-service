@@ -52,13 +52,32 @@ function AdminDashboard({ user, setUser }) {
         icon: "error",
         timer: 700,
       });
-      console.log(err);
     }
   };
 
   // hanlde block account
-  const handleBlockAccount = (userEmail) => {
-    console.log(userEmail);
+  const handleBlockAccount = async (userEmail) => {
+    try {
+      const response = await AxiosSecure.patch(`/user-block/${userEmail}`);
+      const resData = await response.data;
+      if (resData?.modifiedCount > 0) {
+        Swal.fire({
+          title: "Account Status Changed",
+          text: "User's account status has been updated successfully!",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        refetch();
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Error",
+        text: err.response?.data?.message || "Something went wrong!",
+        icon: "error",
+        timer: 700,
+      });
+    }
   };
   return (
     <>
@@ -160,13 +179,12 @@ function AdminDashboard({ user, setUser }) {
                           <td>{user?.email}</td>
                           <td> {user?.mobileNumber}</td>
                           <td>
-                            {user?.balance ||
-                              (user?.balance === 0 && (
-                                <div className="flex items-center gap-1">
-                                  <TbCurrencyTaka></TbCurrencyTaka>
-                                  {user?.balance}
-                                </div>
-                              ))}
+                            {user?.balance >= 0 && (
+                              <div className="flex items-center gap-1">
+                                <TbCurrencyTaka></TbCurrencyTaka>
+                                {user?.balance}
+                              </div>
+                            )}
                           </td>
                           <td>
                             <span
