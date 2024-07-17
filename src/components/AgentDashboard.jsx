@@ -8,12 +8,20 @@ import { SiNamemc } from "react-icons/si";
 import { TbCoinTakaFilled, TbCurrencyTaka } from "react-icons/tb";
 import Swal from "sweetalert2";
 import AxiosSecure from "./../axios/AxiosSecure";
+import useUsersData from "./../hooks/useUsersData";
 import HandleLogout from "./HandleLogout";
 import Loader from "./Loader";
 
 function AgentDashboard({ user }) {
+  // current user refetch
+  const { currentUserRefetch } = useUsersData();
+
   // get requist cash-in or cash-out
-  const { data: transactionRequest = [], isPending } = useQuery({
+  const {
+    data: transactionRequest = [],
+    isPending,
+    refetch: refetchRequest,
+  } = useQuery({
     queryKey: ["cash-in", "cash-out"],
     queryFn: async () => {
       try {
@@ -59,6 +67,8 @@ function AgentDashboard({ user }) {
         );
         const resData = await response.data;
         if (resData?.success && resData?.message === "Cash-in approved.") {
+          currentUserRefetch();
+          refetchRequest();
           Swal.fire({
             title: "Cash In Request Approved",
             text: "Cash-in request has been approved successfully!",
@@ -70,6 +80,8 @@ function AgentDashboard({ user }) {
           resData?.success &&
           resData?.message === "Cash-out approved."
         ) {
+          currentUserRefetch();
+          refetchRequest();
           Swal.fire({
             title: "Cash Out Request Approved",
             text: "Cash-out request has been approved successfully!",
@@ -127,7 +139,7 @@ function AgentDashboard({ user }) {
                 <TbCoinTakaFilled className="text-xl"></TbCoinTakaFilled>{" "}
                 <strong>Account Balance:</strong>{" "}
                 <div className="flex items-center gap-1">
-                  <TbCurrencyTaka></TbCurrencyTaka> {user?.balance}
+                  <TbCurrencyTaka></TbCurrencyTaka> {user?.balance.toFixed(2)}
                 </div>
               </div>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">

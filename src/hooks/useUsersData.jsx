@@ -10,7 +10,7 @@ function useUsersData() {
   const token = localStorage.getItem("token");
 
   // fetch user
-  const { data: user = null } = useQuery({
+  const { data: user = null, refetch: currentUserRefetch } = useQuery({
     queryKey: ["currentUser", token, pathname],
     queryFn: async () => {
       const response = await AxiosSecure.get("/users");
@@ -19,7 +19,7 @@ function useUsersData() {
     },
   });
 
-  return { user };
+  return { user, currentUserRefetch };
 }
 
 export default useUsersData;

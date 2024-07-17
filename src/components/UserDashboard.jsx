@@ -50,7 +50,7 @@ function UserDashboard({ user }) {
                 <TbCoinTakaFilled className="text-xl"></TbCoinTakaFilled>{" "}
                 <strong>Account Balance:</strong>{" "}
                 <div className="flex items-center gap-1">
-                  <TbCurrencyTaka></TbCurrencyTaka> {user?.balance}
+                  <TbCurrencyTaka></TbCurrencyTaka> {user?.balance.toFixed(2)}
                 </div>
               </div>
               <p className="flex justify-start items-center gap-2 flex-wrap break-words">

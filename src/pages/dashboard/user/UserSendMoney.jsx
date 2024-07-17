@@ -1,9 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useUsersData from "../../../hooks/useUsersData";
 import AxiosSecure from "./../../../axios/AxiosSecure";
 
 function UserSendMoney() {
+  // current user refetch
+  const { currentUserRefetch } = useUsersData();
+
   // handle send money form
   const {
     register,
@@ -43,6 +47,7 @@ function UserSendMoney() {
       );
       const resData = await response.data;
       if (resData?.transactionId) {
+        currentUserRefetch();
         reset();
         Swal.fire({
           title: "Success",
