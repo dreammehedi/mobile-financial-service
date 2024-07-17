@@ -32,7 +32,6 @@ function UserCashIn() {
       amount: amount,
       PIN: data?.pin,
     };
-    console.log(recipientInfo);
 
     try {
       const response = await AxiosSecure.post("/user-cash-in", recipientInfo);
