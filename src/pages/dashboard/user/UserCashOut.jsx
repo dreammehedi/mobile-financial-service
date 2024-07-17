@@ -41,11 +41,11 @@ function UserCashOut() {
     try {
       const response = await AxiosSecure.post("/user-cash-out", recipientInfo);
       const resData = await response.data;
-      if (resData?.transactionId) {
+      if (resData?.insertedId) {
         reset();
         Swal.fire({
-          title: "Success",
-          text: `Transaction successful! Transaction ID: ${response.data.transactionId}`,
+          title: "Cash Out Request Successful",
+          text: "Your money request has been successfully for agent. Wait for agent Confirmation. Agent confirm your account cash out success!",
           icon: "success",
           showConfirmButton: true,
         });
@@ -53,9 +53,7 @@ function UserCashOut() {
     } catch (err) {
       Swal.fire({
         title: "Error",
-        text: `Transaction failed: ${
-          err.response?.data?.message || err.message
-        }`,
+        text: err.response?.data?.message || "Something went wrong!",
         icon: "error",
         showConfirmButton: true,
       });

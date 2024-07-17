@@ -58,7 +58,7 @@ function AgentDashboard({ user }) {
           data
         );
         const resData = await response.data;
-        if (resData?.success && resData?.message === "cash-in") {
+        if (resData?.success && resData?.message === "Cash-in approved.") {
           Swal.fire({
             title: "Cash In Request Approved",
             text: "Cash-in request has been approved successfully!",
@@ -66,7 +66,10 @@ function AgentDashboard({ user }) {
             showConfirmButton: false,
             timer: 1000,
           });
-        } else if (resData?.success && resData?.message === "cash-out") {
+        } else if (
+          resData?.success &&
+          resData?.message === "Cash-out approved."
+        ) {
           Swal.fire({
             title: "Cash Out Request Approved",
             text: "Cash-out request has been approved successfully!",
