@@ -1,5 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { PiDeviceMobileFill } from "react-icons/pi";
@@ -8,25 +8,23 @@ import { SiNamemc } from "react-icons/si";
 import { TbCurrencyTaka } from "react-icons/tb";
 import AxiosSecure from "./../axios/AxiosSecure";
 import HandleLogout from "./HandleLogout";
+import Loader from "./Loader";
 
 function AdminDashboard({ user, setUser }) {
-  // all users
-  const [allUsers, setAllUsers] = useState([]);
-  console.log(allUsers);
-
   // get all users
-  useEffect(() => {
-    const fetchAllUsers = async () => {
+  const { data: allUsers = [], isPending } = useQuery({
+    queryKey: ["allUsers"],
+    queryFn: async () => {
       try {
         const response = await AxiosSecure.get("/all-users");
         const resData = await response.data;
-        setAllUsers(resData);
+        return resData;
       } catch (err) {
         console.error(err);
       }
-    };
-    fetchAllUsers();
-  }, []);
+    },
+  });
+
   return (
     <>
       {/* dynamic page title */}
@@ -68,6 +66,12 @@ function AdminDashboard({ user, setUser }) {
             <HandleLogout setUser={setUser}></HandleLogout>
           </div>
 
+          {/* is pending user data */}
+          {isPending && (
+            <>
+              <Loader></Loader>
+            </>
+          )}
           {/* users data get */}
           <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-lg shadow-lg">
             {/* title */}
@@ -78,102 +82,104 @@ function AdminDashboard({ user, setUser }) {
               </span>
             </h2>
 
-            <div className="overflow-x-auto rounded-md">
-              <table className="min-w-full text-xs text-left">
-                {/* table head */}
-                <thead className="w-full bg-blue-500  text-white">
-                  <tr className="*:px-4 *:py-3 text-base">
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th>Balance</th>
-                    <th>Status</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
+            {allUsers?.length > 0 ? (
+              <div className="overflow-x-auto rounded-md">
+                <table className="min-w-full text-xs text-left">
+                  {/* table head */}
+                  <thead className="w-full bg-blue-500  text-white">
+                    <tr className="*:px-4 *:py-3 text-base">
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <th>Balance</th>
+                      <th>Status</th>
+                      <th>Role</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
 
-                {/* table body */}
-                <tbody className="font-medium">
-                  {allUsers?.map((user, ind) => {
-                    return (
-                      <tr
-                        key={ind}
-                        className={`${
-                          ind / 2 === 0 ? "bg-blue-200" : "bg-blue-100"
-                        } *:px-4 *:py-2 *:break-words `}
-                      >
-                        <td>
-                          <div className="flex items-center gap-2">
+                  {/* table body */}
+                  <tbody className="font-medium">
+                    {allUsers?.map((user, ind) => {
+                      return (
+                        <tr
+                          key={ind}
+                          className={`${
+                            ind / 2 === 0 ? "bg-blue-200" : "bg-blue-100"
+                          } *:px-4 *:py-2 *:break-words `}
+                        >
+                          <td>
+                            <div className="flex items-center gap-2">
+                              <span
+                                className={`${
+                                  user?.status === "active"
+                                    ? "bg-green-500"
+                                    : "bg-orange-500"
+                                }  text-white p-3 text-sm rounded-full size-3 flex justify-center items-center`}
+                              >
+                                {ind + 1}
+                              </span>
+                              {user?.name}
+                            </div>
+                          </td>
+                          <td>{user?.email}</td>
+                          <td> {user?.mobileNumber}</td>
+                          <td>
+                            {user?.balance ||
+                              (user?.balance === 0 && (
+                                <div className="flex items-center gap-1">
+                                  <TbCurrencyTaka></TbCurrencyTaka>
+                                  {user?.balance}
+                                </div>
+                              ))}
+                          </td>
+                          <td>
                             <span
                               className={`${
                                 user?.status === "active"
                                   ? "bg-green-500"
                                   : "bg-orange-500"
-                              }  text-white p-3 text-sm rounded-full size-3 flex justify-center items-center`}
+                              } text-white rounded-md px-3 py-1`}
                             >
-                              {ind + 1}
+                              {user?.status}
                             </span>
-                            {user?.name}
-                          </div>
-                        </td>
-                        <td>{user?.email}</td>
-                        <td> {user?.mobileNumber}</td>
-                        <td>
-                          {user?.balance ||
-                            (user?.balance === 0 && (
-                              <div className="flex items-center gap-1">
-                                <TbCurrencyTaka></TbCurrencyTaka>
-                                {user?.balance}
-                              </div>
-                            ))}
-                        </td>
-                        <td>
-                          <span
-                            className={`${
-                              user?.status === "active"
-                                ? "bg-green-500"
-                                : "bg-orange-500"
-                            } text-white rounded-md px-3 py-1`}
-                          >
-                            {user?.status}
-                          </span>
-                        </td>
-                        <td>
-                          <span className="bg-blue-500 text-white rounded-md px-3 py-1">
-                            {user?.role}
-                          </span>
-                        </td>
-                        <td>
-                          <div className="flex items-center gap-2">
-                            {/* Check if user is not an admin and has a status */}
-                            {user?.role !== "admin" &&
-                              user?.status &&
-                              // Render either Block or Active button based on user status
-                              (user.status === "active" ? (
-                                // Active button
-                                <button className="text-xs my-transition bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
-                                  Block
-                                </button>
-                              ) : (
-                                // Block button
-                                <button className="text-xs my-transition bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
-                                  Active
-                                </button>
-                              ))}
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-
-            {/* <p className="text-sm font-medium font-inter text-red-500">
-              {" "}
-              No Users Found!
-            </p> */}
+                          </td>
+                          <td>
+                            <span className="bg-blue-500 text-white rounded-md px-3 py-1">
+                              {user?.role}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="flex items-center gap-2">
+                              {/* Check if user is not an admin and has a status */}
+                              {user?.role !== "admin" &&
+                                user?.status &&
+                                // Render either Block or Active button based on user status
+                                (user.status === "active" ? (
+                                  // Active button
+                                  <button className="text-xs my-transition bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
+                                    Block
+                                  </button>
+                                ) : (
+                                  // Block button
+                                  <button className="text-xs my-transition bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+                                    Active
+                                  </button>
+                                ))}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="text-sm font-medium font-inter text-red-500">
+                {" "}
+                No Users Found!
+              </p>
+            )}
           </div>
         </div>
       </section>
