@@ -86,8 +86,8 @@ const Login = () => {
       </Helmet>
 
       <section className="py-10 md:py-12 lg:py-16 bg-gray-100 w-full min-h-screen flex justify-center items-center">
-        <div className="flex items-center justify-center ">
-          <div className="container bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="container flex items-center justify-center ">
+          <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-md">
             {/* page title */}
             <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
               Login
