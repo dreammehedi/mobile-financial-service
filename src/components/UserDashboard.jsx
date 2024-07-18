@@ -78,10 +78,10 @@ function UserDashboard({ user }) {
           </div>
 
           {/* main ui image & send money, cash-out, cash-in, balance-inquery, transaction history */}
-          <div className="lg:col-span-2 w-full h-fit flex flex-col justify-center bg-white p-4 md:p-6 rounded-lg shadow-lg relative">
+          <div className="lg:col-span-2 w-full h-fit  flex flex-col justify-center bg-white p-4 md:p-6 rounded-lg shadow-lg relative">
             {/* image */}
             <img
-              className="w-full h-auto md:max-h-[400px] object-cover rounded-md opacity-50"
+              className="w-full h-auto min-h-[300px] md:max-h-[400px] object-cover rounded-md opacity-50"
               src="https://i.ibb.co/d4ZcFmm/0-Nbm5t-Vi-L-X3n-EELe.png"
               alt=""
             />
