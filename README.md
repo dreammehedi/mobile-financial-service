@@ -4,6 +4,14 @@
 
 This project is a basic Mobile Financial Service (MFS) application similar to bKash or Nagad. The application includes features such as user authentication, send money, cash-out, balance inquiries, and more. The web interface is designed to be simple and secure.
 
+## Live Link
+
+- [Surge Live Link](https://flexiwalled.surge.sh/)
+
+- [Vercel Live Link](https://flexiwalled.vercel.app/)
+
+- [Netlify Live Link](https://flexiwalled.netlify.app/)
+
 ## Features
 
 ### User
@@ -41,16 +49,19 @@ This project is a basic Mobile Financial Service (MFS) application similar to bK
 
 1. Clone the repository:
 
-```bash
-    git clone https://github.com/dreammehedi/mobile-financial-service.git
+   ```bash
+       git clone https://github.com/dreammehedi/mobile-financial-service.git
 
-```
+   ```
 
 2. Install dependencies:
 
-   - **npm install**
-   - **npm run dev**
-   - The application will be available at http://localhost:5173
+   ```bash
+       npm install
+       npm run dev
+   ```
+
+- The application will be available at http://localhost:5173
 
 ## Usage
 
