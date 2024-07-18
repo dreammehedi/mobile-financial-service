@@ -42,8 +42,8 @@ const Login = () => {
       // check before user login , user account is activated by admin
       if (resData?.status !== "active") {
         Swal.fire({
-          title: "Account Inactive",
-          text: "Your account is currently inactive. Please wait for Admin Approval!",
+          title: `Account ${resData?.status}!`,
+          text: `Your account is currently ${resData?.status}. Please wait for Admin Approval!`,
           icon: "warning",
           showConfirmButton: true,
         });
