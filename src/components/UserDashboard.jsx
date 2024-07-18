@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { PiDeviceMobileFill } from "react-icons/pi";
@@ -10,7 +11,20 @@ import HandleLogout from "./HandleLogout";
 
 function UserDashboard({ user }) {
   // pathname
-  const { pathname } = useLocation();
+  const location = useLocation();
+
+  // outlet ref
+  const outletRef = useRef(null);
+
+  // currrent outlet show in display
+  useEffect(() => {
+    if (location?.pathname !== "/") {
+      const element = outletRef.current;
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   return (
     <>
@@ -112,10 +126,10 @@ function UserDashboard({ user }) {
           </div>
         </div>
 
-        {pathname !== "/" && (
-          // {/* outlet dashboard */}
+        {/* outlet dashboard */}
+        {location?.pathname !== "/" && (
           <>
-            <section className="container">
+            <section className="container" ref={outletRef}>
               <div className=" bg-white p-4 md:p-6 rounded-lg shadow-lg">
                 <Outlet></Outlet>
               </div>

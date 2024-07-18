@@ -18,7 +18,6 @@ function UserTransactionHistory() {
       }
     },
   });
-
   // Function to format the date
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
