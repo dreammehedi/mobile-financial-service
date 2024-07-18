@@ -13,10 +13,13 @@ function useUsersData() {
   const { data: user = null, refetch: currentUserRefetch } = useQuery({
     queryKey: ["currentUser", token, pathname],
     queryFn: async () => {
+      if (!token) {
+        return null;
+      }
       const response = await AxiosSecure.get("/users");
-      const resData = await response.data;
-      return resData;
+      return response.data;
     },
+    enabled: !!token,
   });
 
   return { user, currentUserRefetch };

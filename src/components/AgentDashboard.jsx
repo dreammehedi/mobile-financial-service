@@ -206,9 +206,7 @@ function AgentDashboard({ user }) {
                             <td>{formatDate(transaction?.date)}</td>
                             <td>{transaction?.type}</td>
                             <td>
-                              {transaction?.status === "approved" ? (
-                                "Already Approved"
-                              ) : (
+                              {transaction?.status === "pending" ? (
                                 //  {/* Approve button */}
                                 <button
                                   onClick={() => {
@@ -218,6 +216,8 @@ function AgentDashboard({ user }) {
                                 >
                                   Approve
                                 </button>
+                              ) : (
+                                "Already Approved"
                               )}
                             </td>
                           </tr>

@@ -80,7 +80,7 @@ function UserTransactionHistory() {
                       } *:px-4 *:py-2 *:break-words `}
                     >
                       <td>{transaction?.senderId}</td>
-                      <td>{transaction?.recipient}</td>
+                      <td>{transaction?.recipiend}</td>
                       <td>
                         <div className="flex items-center gap-1">
                           <TbCurrencyTaka></TbCurrencyTaka>
