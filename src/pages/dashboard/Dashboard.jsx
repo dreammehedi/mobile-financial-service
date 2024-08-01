@@ -5,10 +5,10 @@ import UserDashboard from "../../components/UserDashboard";
 import useUsersData from "../../hooks/useUsersData";
 const Dashboard = () => {
   // user data
-  const { user } = useUsersData();
+  const { user, userLoader } = useUsersData();
 
   // user not login then loading
-  if (!user)
+  if (userLoader)
     return (
       <>
         <Loader></Loader>
